@@ -31,67 +31,67 @@ positiveNegativeButton.textContent = '+/-';
 
 const percentButton = document.querySelector('.row1 .button3');
 percentButton.textContent = '%';
-percentButton.classList.add('.isOperator');
+percentButton.classList.add('isOperator');
 
 const divideButton = document.querySelector('.row1 .button4');
 divideButton.textContent = ' / ';
-divideButton.classList.add('.isOperator');
+divideButton.classList.add('isOperator');
 
 const sevenButton = document.querySelector('.row2 .button1');
 sevenButton.textContent = '7';
-sevenButton.classList.add('.isNumber');
+sevenButton.classList.add('isNumber');
 
 const eightButton = document.querySelector('.row2 .button2');
 eightButton.textContent = '8';
-eightButton.classList.add('.isNumber');
+eightButton.classList.add('isNumber');
 
 const nineButton = document.querySelector('.row2 .button3');
 nineButton.textContent = '9';
-nineButton.classList.add('.isNumber');
+nineButton.classList.add('isNumber');
 
 const multiplyButton = document.querySelector('.row2 .button4');
 multiplyButton.textContent = ' x ';
-multiplyButton.classList.add('.isOperator');
+multiplyButton.classList.add('isOperator');
 
 const fourButton = document.querySelector('.row3 .button1');
 fourButton.textContent = '4';
-fourButton.classList.add('.isNumber');
+fourButton.classList.add('isNumber');
 
 const fiveButton = document.querySelector('.row3 .button2');
 fiveButton.textContent = '5';
-fiveButton.classList.add('.isNumber');
+fiveButton.classList.add('isNumber');
 
 const sixButton = document.querySelector('.row3 .button3');
 sixButton.textContent = '6';
-sixButton.classList.add('.isNumber');
+sixButton.classList.add('isNumber');
 
 const subtractButton = document.querySelector('.row3 .button4');
 subtractButton.textContent = ' - ';
-subtractButton.classList.add('.isOperator');
+subtractButton.classList.add('isOperator');
 
 const oneButton = document.querySelector('.row4 .button1');
 oneButton.textContent = '1';
-oneButton.classList.add('.isNumber')
+oneButton.classList.add('isNumber')
 
 const twoButton = document.querySelector('.row4 .button2');
 twoButton.textContent = '2';
-twoButton.classList.add('.isNumber')
+twoButton.classList.add('isNumber')
 
 const threeButton = document.querySelector('.row4 .button3');
 threeButton.textContent = '3';
-threeButton.classList.add('.isNumber')
+threeButton.classList.add('isNumber')
 
 const addButton = document.querySelector('.row4 .button4');
 addButton.textContent = ' + ';
-addButton.classList.add('.isOperator');
+addButton.classList.add('isOperator');
 
 const zeroButton = document.querySelector('.row5 .button1');
 zeroButton.textContent = '0';
-zeroButton.classList.add('.isNumber')
+zeroButton.classList.add('isNumber')
 
 const periodButton = document.querySelector('.row5 .button2');
 periodButton.textContent = '.';
-periodButton.classList.add('.isOperator');
+periodButton.classList.add('isOperator');
 
 const backspaceButton = document.querySelector('.row5 .button3');
 backspaceButton.textContent = 'E';
@@ -99,17 +99,45 @@ backspaceButton.textContent = 'E';
 const operateButton = document.querySelector('.row5 .button4');
 operateButton.textContent = '=';
 
-
+var operators = [' + ', ' - ', ' / ', ' x '];
 
 buttons.forEach(button => button.addEventListener('click', (event)=>{
-    let clickedButton = event.target;
-    let isNumber = clickedButton.classList.contains('.isNumber');
-    let isOperator = clickedButton.classList.contains('.isOperator');
-    if (isNumber || isOperator) {
+    var expression = display.textContent;
+    var parts = expression.match(/\S+| \/ | \+ | \x | - /g);
+    if (parts == null) {parts = []};
+    let clickedButton = event.target; 
+    let isNumber = clickedButton.classList.contains('isNumber');``
+    let isOperator = clickedButton.classList.contains('isOperator');
+    if (isOperator) {
+        if (parts.length != 0) {
+            console.log(operators.includes(parts[parts.length - 1].toString()));
+            if (operators.includes(parts[parts.length - 1])) {
+                parts[parts.length - 1] = clickedButton.textContent;
+                var expression = parts.join('');
+                display.textContent = expression;
+            }
+            else {
+                parts.push(clickedButton.textContent);
+                expression = parts.join('');
+                display.textContent = expression;
+            }        
+        }else {
+            display.textContent += clickedButton.textContent;
+            expression = display.textContent;
+            parts = expression.match(/\S+| \/ | \+ | \x | - /g);
+        };
+    }else if (isNumber) {
         display.textContent += clickedButton.textContent;
-        console.log(display.textContent)
+        expression = display.textContent;
+        parts = expression.match(/\S+| \/ | \+ | \x | - /g);
     }
+    console.log(parts);
+    return parts;
 }));
+
+positiveNegativeButton.addEventListener('click', () => {
+    display.textContent += '-';
+});
 
 
 const add = function(a, b) {
@@ -129,10 +157,11 @@ const divide = function(a, b) {
 };
 
 const operate = (operator, a, b) => {
-    if (operator == '+') {return add(a, b)};
-    if (operator == '-') {return subtract(a, b)};
-    if (operator == '*') {return multiply(a, b)};
-    if (operator == '/') {return divide(a, b)};
+
+    if (operator == ' + ') {return add(a, b)};
+    if (operator == ' - ') {return subtract(a, b)};
+    if (operator == ' x ') {return multiply(a, b)};
+    if (operator == ' / ') {return divide(a, b)};
 };
 
 
