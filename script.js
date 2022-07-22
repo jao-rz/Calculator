@@ -102,33 +102,34 @@ operateButton.textContent = '=';
 var operators = [' + ', ' - ', ' / ', ' x '];
 
 buttons.forEach(button => button.addEventListener('click', (event)=>{
-    var expression = display.textContent; //take expression from the display
-    var parts = expression.match(/\S+| \/ | \+ | \x | - /g); //split expression into parts
-    if (parts == null) {parts = []}; //If there is no expression yet, create an empty array for future parts
-
     let clickedButton = event.target; 
-    let isNumber = clickedButton.classList.contains('isNumber');
-    let isOperator = clickedButton.classList.contains('isOperator');
+    let clickedButtonisNumber = clickedButton.classList.contains('isNumber');
+    let clickedButtonisOperator = clickedButton.classList.contains('isOperator');
+    var expressionFromDisplay = display.textContent; 
+    
+    separateExpressionIntoParts = (expression) => {
+        return expression.match(/\S+| \/ | \+ | \x | - /g);  
+    }
 
-    if (isOperator) { //if clicked button is operator
-        if (parts.length != 0) { //and expression is not empty
-            if (operators.includes(parts[parts.length - 1])) {//if the last part of the expression is an operator
-                parts[parts.length - 1] = clickedButton.textContent; //turn that operator into the clicked operator
-            }else { //if last part of expression is not an operator
-                parts.push(clickedButton.textContent); //add clicked operator to expression parts
-            };
-        };
-    }else if (isNumber) { //if clicked button is a number
-        parts.push(clickedButton.textContent); //add clicked operator to expression parts
-    }if (clickedButton == positiveNegativeButton && parts[parts.length - 1] == '-') {
-        parts.pop();
-    }else if (clickedButton == positiveNegativeButton && typeof parseInt(parts[parts.length - 1]) === 'number' && operators.includes(parts[parts.length - 1]) == false) {
-        parts[parts.length - 1] = -(parts[parts.length - 1]);
-    }else if (clickedButton == positiveNegativeButton) {parts.push('-');}
-    console.log(typeof parts[parts.length - 1]);
-    expression = parts.join(''); //join the parts and make that the new expression
-    display.textContent = expression; //update the display with the new expression
-    return parts;
+    var expressionParts = separateExpressionIntoParts(expressionFromDisplay);
+    if (expressionParts == null) {expressionParts = []}; 
+    var lastElementOfExpressionIsOperator = operators.includes(expressionParts[expressionParts.length - 1]) ;
+    var lastElementOfExpressionIsNumber = typeof parseInt(expressionParts[expressionParts.length - 1]) === 'number';
+    if (clickedButtonisOperator && expressionParts.length != 0) {
+        if (lastElementOfExpressionIsOperator) {
+            expressionParts[expressionParts.length - 1] = clickedButton.textContent; 
+        }else {
+            expressionParts.push(clickedButton.textContent);
+        }; 
+    }else if (clickedButtonisNumber) {
+        expressionParts.push(clickedButton.textContent); 
+    }if (clickedButton == positiveNegativeButton && expressionParts[expressionParts.length - 1] == '-') {
+        expressionParts.pop();
+    }else if (clickedButton == positiveNegativeButton && lastElementOfExpressionIsNumber && lastElementOfExpressionIsOperator == false) {
+        expressionParts[expressionParts.length - 1] = -(expressionParts[expressionParts.length - 1]);
+    }else if (clickedButton == positiveNegativeButton) {expressionParts.push('-');}
+
+    display.textContent = expressionParts.join('');
 }));
 
 

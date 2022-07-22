@@ -1,21 +1,23 @@
--start by creating functions for the following items:
-    -add
-    -subtract
-    -multiply
-    -divide
-
--Create function 'operate' that takes an operator and 
-2 numbers and then calls one of the above functions on the numbers.
-
--Create calculator design.
-    -Display
-    -Clear buttons
-    -Equals key
-    -arithmetic operator icons
-    -numbers
 
 -Create the functions that populate the display when you click the number buttons… 
 you should be storing the ‘display value’ 
 in a variable somewhere for use in the next step.
+
+-When a button is clicked on,
+separate expression into expressionParts.
+    If clicked button is an operator,
+    and the last character in the expressionParts array is an operator,
+    change the last element in the expressionParts array into the clicked one,
+    join the expressionParts and put it in the expression variable.
+    Then update the display text with the new expression. 
+
+    else ,
+    append the clicked text to the display string.    
+
+
+-When the negative sign is clicked,
+if the last character on the display string is a positive number,
+turn it to negative.
+
 
 -Make all the buttons work properly.
