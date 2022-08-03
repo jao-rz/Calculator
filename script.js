@@ -123,11 +123,25 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
         }; 
     }else if (clickedButtonisNumber) {
         expressionParts.push(clickedButton.textContent); 
-    }if (clickedButton == positiveNegativeButton && expressionParts[expressionParts.length - 1] == '-') {
-        expressionParts.pop();
-    }else if (clickedButton == positiveNegativeButton && lastElementOfExpressionIsNumber && lastElementOfExpressionIsOperator == false) {
-        expressionParts[expressionParts.length - 1] = -(expressionParts[expressionParts.length - 1]);
-    }else if (clickedButton == positiveNegativeButton) {expressionParts.push('-');}
+    }else if (clickedButton == positiveNegativeButton) {
+        if (expressionParts[expressionParts.length - 1] == '-') {
+            expressionParts.pop();
+        }else if (lastElementOfExpressionIsNumber && lastElementOfExpressionIsOperator == false) {
+            expressionParts[expressionParts.length - 1] = -(expressionParts[expressionParts.length - 1]);
+        }else {
+            expressionParts.push('-');
+        }
+    }else if (clickedButton == cButton) {
+        expressionParts.length = 0;
+    }else if (clickedButton == backspaceButton) {
+        lastElementOfExpression = expressionParts[expressionParts.length - 1];
+        arrayOfLastElementCharacters = lastElementOfExpression.match(/[0-9] | - | x | \+ | \/ |.|%/g);
+        console.log(arrayOfLastElementCharacters)
+        arrayOfLastElementCharacters.pop();
+        expressionParts[expressionParts.length - 1] = arrayOfLastElementCharacters.join('');
+    }
+    
+    console.log(expressionParts)
 
     display.textContent = expressionParts.join('');
 }));
