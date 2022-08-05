@@ -89,9 +89,9 @@ const zeroButton = document.querySelector('.row5 .button1');
 zeroButton.textContent = '0';
 zeroButton.classList.add('isNumber')
 
-const periodButton = document.querySelector('.row5 .button2');
-periodButton.textContent = '.';
-periodButton.classList.add('isOperator');
+const decimalPeriodButton = document.querySelector('.row5 .button2');
+decimalPeriodButton.textContent = '.';
+decimalPeriodButton.classList.add('isDecimalPeriod');
 
 const backspaceButton = document.querySelector('.row5 .button3');
 backspaceButton.textContent = 'E';
@@ -136,13 +136,14 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
     }else if (clickedButton == backspaceButton) {
         lastElementOfExpression = expressionParts[expressionParts.length - 1];
         arrayOfLastElementCharacters = lastElementOfExpression.match(/[0-9] | - | x | \+ | \/ |.|%/g);
-        console.log(arrayOfLastElementCharacters)
         arrayOfLastElementCharacters.pop();
         expressionParts[expressionParts.length - 1] = arrayOfLastElementCharacters.join('');
+    }else if (clickedButton == decimalPeriodButton) {
+        if (expressionParts[expressionParts.length - 1].includes('.')){
+            return;
+        }
+        else {expressionParts[expressionParts.length - 1] += '.'}
     }
-    
-    console.log(expressionParts)
-
     display.textContent = expressionParts.join('');
 }));
 
