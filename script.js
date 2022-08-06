@@ -105,46 +105,50 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
     let clickedButton = event.target; 
     let clickedButtonisNumber = clickedButton.classList.contains('isNumber');
     let clickedButtonisOperator = clickedButton.classList.contains('isOperator');
-    var expressionFromDisplay = display.textContent; 
+    var expressionFromDisplay = display.textContent;
     
-    separateExpressionIntoParts = (expression) => {
-        return expression.match(/\S+| \/ | \+ | \x | - /g);  
-    }
+    if (expressionFromDisplay.length == 200) {
+        alert("You can't have more than 200 characters.")
+    }else {
+        separateExpressionIntoParts = (expression) => {
+            return expression.match(/\S+| \/ | \+ | \x | - /g);  
+        }
 
-    var expressionParts = separateExpressionIntoParts(expressionFromDisplay);
-    if (expressionParts == null) {expressionParts = []}; 
-    var lastElementOfExpressionIsOperator = operators.includes(expressionParts[expressionParts.length - 1]) ;
-    var lastElementOfExpressionIsNumber = typeof parseInt(expressionParts[expressionParts.length - 1]) === 'number';
-    if (clickedButtonisOperator && expressionParts.length != 0) {
-        if (lastElementOfExpressionIsOperator) {
-            expressionParts[expressionParts.length - 1] = clickedButton.textContent; 
-        }else {
-            expressionParts.push(clickedButton.textContent);
-        }; 
-    }else if (clickedButtonisNumber) {
-        expressionParts.push(clickedButton.textContent); 
-    }else if (clickedButton == positiveNegativeButton) {
-        if (expressionParts[expressionParts.length - 1] == '-') {
-            expressionParts.pop();
-        }else if (lastElementOfExpressionIsNumber && lastElementOfExpressionIsOperator == false) {
-            expressionParts[expressionParts.length - 1] = -(expressionParts[expressionParts.length - 1]);
-        }else {
-            expressionParts.push('-');
+        var expressionParts = separateExpressionIntoParts(expressionFromDisplay);
+        if (expressionParts == null) {expressionParts = []}; 
+        var lastElementOfExpressionIsOperator = operators.includes(expressionParts[expressionParts.length - 1]) ;
+        var lastElementOfExpressionIsNumber = typeof parseInt(expressionParts[expressionParts.length - 1]) === 'number';
+        if (clickedButtonisOperator && expressionParts.length != 0) {
+            if (lastElementOfExpressionIsOperator) {
+                expressionParts[expressionParts.length - 1] = clickedButton.textContent; 
+            }else {
+                expressionParts.push(clickedButton.textContent);
+            }; 
+        }else if (clickedButtonisNumber) {
+            expressionParts.push(clickedButton.textContent); 
+        }else if (clickedButton == positiveNegativeButton) {
+            if (expressionParts[expressionParts.length - 1] == '-') {
+                expressionParts.pop();
+            }else if (lastElementOfExpressionIsNumber && lastElementOfExpressionIsOperator == false) {
+                expressionParts[expressionParts.length - 1] = -(expressionParts[expressionParts.length - 1]);
+            }else {
+                expressionParts.push('-');
+            }
+        }else if (clickedButton == cButton) {
+            expressionParts.length = 0;
+        }else if (clickedButton == backspaceButton) {
+            lastElementOfExpression = expressionParts[expressionParts.length - 1];
+            arrayOfLastElementCharacters = lastElementOfExpression.match(/[0-9] | - | x | \+ | \/ |.|%/g);
+            arrayOfLastElementCharacters.pop();
+            expressionParts[expressionParts.length - 1] = arrayOfLastElementCharacters.join('');
+        }else if (clickedButton == decimalPeriodButton) {
+            if (expressionParts[expressionParts.length - 1].includes('.')){
+                return;
+            }
+            else {expressionParts[expressionParts.length - 1] += '.'}
         }
-    }else if (clickedButton == cButton) {
-        expressionParts.length = 0;
-    }else if (clickedButton == backspaceButton) {
-        lastElementOfExpression = expressionParts[expressionParts.length - 1];
-        arrayOfLastElementCharacters = lastElementOfExpression.match(/[0-9] | - | x | \+ | \/ |.|%/g);
-        arrayOfLastElementCharacters.pop();
-        expressionParts[expressionParts.length - 1] = arrayOfLastElementCharacters.join('');
-    }else if (clickedButton == decimalPeriodButton) {
-        if (expressionParts[expressionParts.length - 1].includes('.')){
-            return;
-        }
-        else {expressionParts[expressionParts.length - 1] += '.'}
+        display.textContent = expressionParts.join('');
     }
-    display.textContent = expressionParts.join('');
 }));
 
 
