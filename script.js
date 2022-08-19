@@ -31,7 +31,7 @@ positiveNegativeButton.textContent = '+/-';
 
 const percentButton = document.querySelector('.row1 .button3');
 percentButton.textContent = '%';
-percentButton.classList.add('isOperator');
+percentButton.classList.add('percentButton');
 
 const divideButton = document.querySelector('.row1 .button4');
 divideButton.textContent = ' / ';
@@ -106,18 +106,12 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
     let clickedButtonisNumber = clickedButton.classList.contains('isNumber');
     let clickedButtonisOperator = clickedButton.classList.contains('isOperator');
     var expressionFromDisplay = display.textContent;
-    
+    var expressionParts = separateExpressionIntoParts(expressionFromDisplay);
     if (expressionFromDisplay.length == 200) {
         alert("You can't have more than 200 characters.")
     }else {
-        separateExpressionIntoParts = (expression) => {
-            return expression.match(/\S+| \/ | \+ | \x | - /g);  
-        }
-
-        var expressionParts = separateExpressionIntoParts(expressionFromDisplay);
         if (expressionParts == null) {expressionParts = []}; 
-        var lastElementOfExpressionIsOperator = operators.includes(expressionParts[expressionParts.length - 1]) ;
-        var lastElementOfExpressionIsNumber = typeof parseInt(expressionParts[expressionParts.length - 1]) === 'number';
+        var lastElementOfExpressionIsOperator = operators.includes(expressionParts[expressionParts.length - 1])
         if (clickedButtonisOperator && expressionParts.length != 0) {
             if (lastElementOfExpressionIsOperator) {
                 expressionParts[expressionParts.length - 1] = clickedButton.textContent; 
@@ -129,7 +123,7 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
         }else if (clickedButton == positiveNegativeButton) {
             if (expressionParts[expressionParts.length - 1] == '-') {
                 expressionParts.pop();
-            }else if (lastElementOfExpressionIsNumber && lastElementOfExpressionIsOperator == false) {
+            }else if (lastElementOfExpressionIsNumber() && lastElementOfExpressionIsOperator == false) {
                 expressionParts[expressionParts.length - 1] = -(expressionParts[expressionParts.length - 1]);
             }else {
                 expressionParts.push('-');
@@ -144,10 +138,23 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
         }else if (clickedButton == decimalPeriodButton) {
             if (expressionParts[expressionParts.length - 1].includes('.')){
                 return;
-            }
-            else {expressionParts[expressionParts.length - 1] += '.'}
+            } else {expressionParts[expressionParts.length - 1] += '.'}
+        } else if (clickedButton == percentButton) {
+            if (expressionParts[expressionParts.length - 1].includes('%')){
+                return;
+            }else if (lastElementOfExpressionIsNumber()) {
+                expressionParts[expressionParts.length - 1] += '%'}
         }
+        console.log(expressionParts);
+        console.log(isNaN(expressionParts[expressionParts.length - 1]));
         display.textContent = expressionParts.join('');
+        var expressionParts = separateExpressionIntoParts(expressionFromDisplay);
+    }
+    lastElementOfExpressionIsNumber = () => {
+        return isNaN(expressionParts[expressionParts.length - 1]) === 'false';
+    }
+    function separateExpressionIntoParts(expression) {
+        return expression.match(/\S+| \/ | \+ | \x | - /g);  
     }
 }));
 

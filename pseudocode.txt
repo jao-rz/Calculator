@@ -1,8 +1,9 @@
 
 TO FIX:
--Users can't type in more than one '.' per number
-
--Don't let numbers overflow display
+-Percent is not working
+-Percent can only be typed at the end of a number. 
+-If the number has a percent at the end, 
+no other nubers can be typed on that element
 
 TO DO:
 -change backspaceButton from 'E' to a backspace symbol.
@@ -10,8 +11,6 @@ TO DO:
     -percentButton:
         -if number has percentage, 
         divide the number by 100
-    -decimalPeriodButton:
-        -
     -operateButton:
         -
     -Display a snarky error message if 
