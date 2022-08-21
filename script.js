@@ -110,6 +110,9 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
     if (expressionFromDisplay.length == 200) {
         alert("You can't have more than 200 characters.")
     }else {
+        lastElementOfExpressionIsNumber = () => {
+            return isNaN(expressionParts[expressionParts.length - 1]) == false;
+        }
         if (expressionParts == null) {expressionParts = []}; 
         var lastElementOfExpressionIsOperator = operators.includes(expressionParts[expressionParts.length - 1])
         if (clickedButtonisOperator && expressionParts.length != 0) {
@@ -136,7 +139,7 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
             arrayOfLastElementCharacters.pop();
             expressionParts[expressionParts.length - 1] = arrayOfLastElementCharacters.join('');
         }else if (clickedButton == decimalPeriodButton) {
-            if (expressionParts[expressionParts.length - 1].includes('.')){
+            if (expressionParts[expressionParts.length - 1].includes('.') | expressionParts[expressionParts.length - 1].includes('%')){
                 return;
             } else {expressionParts[expressionParts.length - 1] += '.'}
         } else if (clickedButton == percentButton) {
@@ -146,13 +149,11 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
                 expressionParts[expressionParts.length - 1] += '%'}
         }
         console.log(expressionParts);
-        console.log(isNaN(expressionParts[expressionParts.length - 1]));
+        console.log(lastElementOfExpressionIsNumber());
         display.textContent = expressionParts.join('');
         var expressionParts = separateExpressionIntoParts(expressionFromDisplay);
     }
-    lastElementOfExpressionIsNumber = () => {
-        return isNaN(expressionParts[expressionParts.length - 1]) === 'false';
-    }
+
     function separateExpressionIntoParts(expression) {
         return expression.match(/\S+| \/ | \+ | \x | - /g);  
     }
