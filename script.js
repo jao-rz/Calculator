@@ -122,7 +122,13 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
                 expressionParts.push(clickedButton.textContent);
             }; 
         }else if (clickedButtonisNumber) {
-            expressionParts.push(clickedButton.textContent); 
+            if (display.textContent == '') {
+                expressionParts.push(clickedButton.textContent);
+            }else if (expressionParts[expressionParts.length - 1].includes('%')) {
+                return;
+            }else{
+                expressionParts.push(clickedButton.textContent);
+            } 
         }else if (clickedButton == positiveNegativeButton) {
             if (expressionParts[expressionParts.length - 1] == '-') {
                 expressionParts.pop();
