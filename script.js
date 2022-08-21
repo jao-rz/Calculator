@@ -139,9 +139,11 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
             arrayOfLastElementCharacters.pop();
             expressionParts[expressionParts.length - 1] = arrayOfLastElementCharacters.join('');
         }else if (clickedButton == decimalPeriodButton) {
-            if (expressionParts[expressionParts.length - 1].includes('.') | expressionParts[expressionParts.length - 1].includes('%')){
+            if (display.textContent == '') {
+                expressionParts.push('.')
+            }else if (expressionParts[expressionParts.length - 1].includes('.') | expressionParts[expressionParts.length - 1].includes('%')){
                 return;
-            } else {expressionParts[expressionParts.length - 1] += '.'}
+            } else {expressionParts.push('.')};
         } else if (clickedButton == percentButton) {
             if (expressionParts[expressionParts.length - 1].includes('%')){
                 return;
