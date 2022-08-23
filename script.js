@@ -116,7 +116,9 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
         if (expressionParts == null) {expressionParts = []}; 
         var lastElementOfExpressionIsOperator = operators.includes(expressionParts[expressionParts.length - 1])
         if (clickedButtonisOperator && expressionParts.length != 0) {
-            if (lastElementOfExpressionIsOperator) {
+            if (expressionParts[expressionParts.length - 1] == '-'){
+                return;
+            }else if (lastElementOfExpressionIsOperator) {
                 expressionParts[expressionParts.length - 1] = clickedButton.textContent; 
             }else {
                 expressionParts.push(clickedButton.textContent);
