@@ -152,46 +152,49 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
             }else if (expressionParts[expressionParts.length - 1].includes('.') | expressionParts[expressionParts.length - 1].includes('%')){
                 return;
             } else {expressionParts.push('.')};
-        } else if (clickedButton == percentButton) {
+        }else if (clickedButton == percentButton) {
             if (expressionParts[expressionParts.length - 1].includes('%')){
                 return;
             }else if (lastElementOfExpressionIsNumber()) {
                 expressionParts[expressionParts.length - 1] += '%'}
-        }
+        }else if(clickedButton == operateButton) {
+            operate();
+        };
         console.log(expressionParts);
         console.log(lastElementOfExpressionIsNumber());
         display.textContent = expressionParts.join('');
         var expressionParts = separateExpressionIntoParts(expressionFromDisplay);
-    }
-
+    };
     function separateExpressionIntoParts(expression) {
         return expression.match(/\S+| \/ | \+ | \x | - /g);  
-    }
+    };
+    function operate() {
+        const add = function(a, b) {
+            return a + b;
+        };
+        const subtract = function(a, b) {
+            return a - b;
+        };
+        const multiply = function(a, b) {
+            return a * b;
+        };
+        const divide = function(a, b) {
+            return a / b;
+        };
+        var result = undefined;
+        let expressionPartToBeCalculated = expressionParts.splice(0,3);
+        let a = parseInt(expressionPartToBeCalculated[0]);
+        let b = parseInt(expressionPartToBeCalculated[2]);
+        let operator = expressionPartToBeCalculated[1];
+        if (operator == ' + ') {
+            result = add(a, b);
+        }else if (operator == ' - ') {
+            result = subtract(a, b)
+        }else if (operator == ' x ') {
+            result = multiply(a, b);
+        }else if (operator == ' / ') {
+            result = divide(a, b);
+        };
+        return expressionParts.unshift(result);
+    };    
 }));
-
-
-const add = function(a, b) {
-    return a + b;
-};
-
-const subtract = function(a, b) {
-    return a - b;
-};
-
-const multiply = function(a, b) {
-    return a * b;
-};
-
-const divide = function(a, b) {
-    return a / b;
-};
-
-const operate = (operator, a, b) => {
-
-    if (operator == ' + ') {return add(a, b)};
-    if (operator == ' - ') {return subtract(a, b)};
-    if (operator == ' x ') {return multiply(a, b)};
-    if (operator == ' / ') {return divide(a, b)};
-};
-
-

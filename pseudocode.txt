@@ -1,11 +1,12 @@
 
 TO FIX:
--Percent is not working
--Percent can only be typed at the end of a number. 
--If the number has a percent at the end, 
-no other nubers can be typed on that element
+-if user clicks on operateButton and 
+there's only one number on display then 
+the number disappears.
 
 TO DO:
+-Create operate function in code pen
+-Add operate function to script
 -change backspaceButton from 'E' to a backspace symbol.
 -Make all the buttons work properly.
     -percentButton:
