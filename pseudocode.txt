@@ -3,6 +3,10 @@ TO FIX:
 -if user clicks on operateButton and 
 there's only one number on display then 
 the number disappears.
+-Can calculate float numbers, but 
+doesn't always return a float number when
+it should. (Ex. '5.371980182302326e+22 x 5' returns '25'; it 
+ignores everything after the decimal period);
 
 TO DO:
 -Create operate function in code pen

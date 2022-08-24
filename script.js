@@ -169,32 +169,36 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
         return expression.match(/\S+| \/ | \+ | \x | - /g);  
     };
     function operate() {
-        const add = function(a, b) {
-            return a + b;
+        if (expressionParts.length == 1) {
+            return;
+        }else {
+            const add = function(a, b) {
+                return a + b;
+            };
+            const subtract = function(a, b) {
+                return a - b;
+            };
+            const multiply = function(a, b) {
+                return a * b;
+            };
+            const divide = function(a, b) {
+                return a / b;
+            };
+            var result = undefined;
+            let expressionPartToBeCalculated = expressionParts.splice(0,3);
+            let a = parseInt(expressionPartToBeCalculated[0]);
+            let b = parseInt(expressionPartToBeCalculated[2]);
+            let operator = expressionPartToBeCalculated[1];
+            if (operator == ' + ') {
+                result = add(a, b);
+            }else if (operator == ' - ') {
+                result = subtract(a, b)
+            }else if (operator == ' x ') {
+                result = multiply(a, b);
+            }else if (operator == ' / ') {
+                result = divide(a, b);
+            };
+            return expressionParts.unshift(result);
         };
-        const subtract = function(a, b) {
-            return a - b;
-        };
-        const multiply = function(a, b) {
-            return a * b;
-        };
-        const divide = function(a, b) {
-            return a / b;
-        };
-        var result = undefined;
-        let expressionPartToBeCalculated = expressionParts.splice(0,3);
-        let a = parseInt(expressionPartToBeCalculated[0]);
-        let b = parseInt(expressionPartToBeCalculated[2]);
-        let operator = expressionPartToBeCalculated[1];
-        if (operator == ' + ') {
-            result = add(a, b);
-        }else if (operator == ' - ') {
-            result = subtract(a, b)
-        }else if (operator == ' x ') {
-            result = multiply(a, b);
-        }else if (operator == ' / ') {
-            result = divide(a, b);
-        };
-        return expressionParts.unshift(result);
     };    
 }));
