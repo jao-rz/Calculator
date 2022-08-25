@@ -186,8 +186,8 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
             };
             var result = undefined;
             let expressionPartToBeCalculated = expressionParts.splice(0,3);
-            let a = parseInt(expressionPartToBeCalculated[0]);
-            let b = parseInt(expressionPartToBeCalculated[2]);
+            let a = parseFloat(expressionPartToBeCalculated[0]);
+            let b = parseFloat(expressionPartToBeCalculated[2]);
             let operator = expressionPartToBeCalculated[1];
             if (operator == ' + ') {
                 result = add(a, b);
