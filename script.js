@@ -156,7 +156,10 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
             if (expressionParts[expressionParts.length - 1].includes('%')){
                 return;
             }else if (lastElementOfExpressionIsNumber()) {
-                expressionParts[expressionParts.length - 1] += '%'}
+                let percent = expressionParts[expressionParts.length - 1] / 100
+                console.log(percent)
+                expressionParts[expressionParts.length - 1] = percent
+            }
         }else if(clickedButton == operateButton) {
             operate();
         };
