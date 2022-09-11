@@ -161,10 +161,15 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
                 expressionParts[expressionParts.length - 1] = percent
             }
         }else if(clickedButton == operateButton) {
-            operate();
-        };
-        console.log(expressionParts);
-        console.log(lastElementOfExpressionIsNumber());
+            if (lastElementOfExpressionIsOperator){
+                return;
+            }else if(expressionParts[expressionParts.length -1] == '-'){
+                return;
+            }else{
+                operate();
+            }
+        };  
+        console.log(expressionParts)
         display.textContent = expressionParts.join('');
         var expressionParts = separateExpressionIntoParts(expressionFromDisplay);
     };
@@ -172,7 +177,7 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
         return expression.match(/\S+| \/ | \+ | \x | - /g);  
     };
     function operate() {
-        if (expressionParts.length == 1) {
+        if (expressionParts.length == 1 || expressionParts.length == 0) {
             return;
         }else {
             const add = function(a, b) {
@@ -199,9 +204,12 @@ buttons.forEach(button => button.addEventListener('click', (event)=>{
             }else if (operator == ' x ') {
                 result = multiply(a, b);
             }else if (operator == ' / ') {
-                result = divide(a, b);
-            };
-            return expressionParts.unshift(result);
+                result = divide(a, b)
+            }
+            if (result === Infinity || Number.isNaN(result)){
+                return expressionParts = ['ERROR']}
+            let roundedResult = Math.round(result * 100) / 100
+            return expressionParts.unshift(roundedResult);
         };
     };    
 }));

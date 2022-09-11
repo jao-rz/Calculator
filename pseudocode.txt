@@ -1,25 +1,11 @@
 
 TO FIX:
--If last element in an expression is an operator, 
-the calculator returns NaN. (Solution: Make the calculator ignore it.)
--negative symbol can be typed after percent
+-When there's nothing on display, if user clicks on operator,
+the result is NaN.
 TO DO:
--change backspaceButton from 'E' to a backspace symbol.
--Make all the buttons work properly.
-    -percentButton:
-        -if number has percentage, 
-        divide the number by 100
-    -operateButton:
-        -
     -Display a snarky error message if 
     the user tries to divide by 
     0… and don’t let it crash your calculator!
-
-    -You should round answers with long decimals so that 
-    they don’t overflow the screen.
-
-    -Pressing = before entering all of the numbers or an 
-    operator could cause problems!
 
     -Add keybord support
 
